@@ -8,12 +8,11 @@ import (
 	"reflect"
 	"testing"
 
-	bitset "github.com/skip2/go-qrcode/bitset"
+	bitset "github.com/scholar7r/go-qrcode/bitset"
 )
 
 func TestClassifyDataMode(t *testing.T) {
-	type Test struct {
-	}
+	type Test struct{}
 
 	tests := []struct {
 		data   []byte

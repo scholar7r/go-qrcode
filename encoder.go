@@ -7,7 +7,7 @@ import (
 	"errors"
 	"log"
 
-	bitset "github.com/skip2/go-qrcode/bitset"
+	bitset "github.com/scholar7r/go-qrcode/bitset"
 )
 
 // Data encoding.
@@ -196,7 +196,7 @@ func (d *dataEncoder) encode(data []byte) (*bitset.Bitset, error) {
 	}
 
 	if singleByteSegmentLength <= optimizedLength {
-		d.optimised = []segment{segment{dataMode: highestRequiredMode, data: d.data}}
+		d.optimised = []segment{{dataMode: highestRequiredMode, data: d.data}}
 	}
 
 	// Encode data.
@@ -277,19 +277,16 @@ func (d *dataEncoder) optimiseDataModes() error {
 			}
 
 			coalescedLength, err := d.encodedLength(mode, numChars+nextNumChars)
-
 			if err != nil {
 				return err
 			}
 
 			seperateLength1, err := d.encodedLength(mode, numChars)
-
 			if err != nil {
 				return err
 			}
 
 			seperateLength2, err := d.encodedLength(nextMode, nextNumChars)
-
 			if err != nil {
 				return err
 			}
@@ -302,8 +299,10 @@ func (d *dataEncoder) optimiseDataModes() error {
 			}
 		}
 
-		optimised := segment{dataMode: mode,
-			data: make([]byte, 0, numChars)}
+		optimised := segment{
+			dataMode: mode,
+			data:     make([]byte, 0, numChars),
+		}
 
 		for k := i; k < j; k++ {
 			optimised.data = append(optimised.data, d.actual[k].data...)
@@ -406,10 +405,10 @@ func (d *dataEncoder) charCountBits(dataMode dataMode) int {
 // dataMode.
 //
 // The number of bits required is affected by:
-//	- QR code type - Mode Indicator length.
-//	- Data mode - number of bits used to represent data length.
-//	- Data mode - how the data is encoded.
-//	- Number of symbols encoded.
+//   - QR code type - Mode Indicator length.
+//   - Data mode - number of bits used to represent data length.
+//   - Data mode - how the data is encoded.
+//   - Number of symbols encoded.
 //
 // An error is returned if the mode is not supported, or the length requested is
 // too long to be represented.
